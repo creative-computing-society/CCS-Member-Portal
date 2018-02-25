@@ -122,6 +122,20 @@ input[type=text],select{
 
 }
 
+input[type=password]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+
+}
+
+
+
 
 input[type=submit]{
 	width: 100%;

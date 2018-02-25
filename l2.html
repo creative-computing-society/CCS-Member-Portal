@@ -54,14 +54,17 @@
         </div >
        <div class="login-box">
 
-            <h1>Login Here</h1><br>
+            <button>Login Here</button>
+            <button>Sign Up</button> 
+            <br>
+
            <form name="login-form" action="" method="post">
 
                <label for="name">USERNAME</label>
           	   <input type="text" id="name" name="username" placeholder="enter username">
 
           	   <label for="pass">PASSWORD</label>
-          	   <input type="text" id="pass" name="password" placeholder="enter password">
+          	   <input type="password" id="pass" name="password" placeholder="enter password">
 
                  <select>
                 	<option value="MEMBER">MEMBER</option>
@@ -69,6 +72,26 @@
                 </select>
 
           	   <input type="submit" value="SUBMIT">
+          </form>
+
+           
+           <form name="login-form" action="" method="post">
+
+               <label for="name">USERNAME</label>
+               <input type="text" id="name" name="username" placeholder="enter username">
+
+               <label for="pass">PASSWORD</label>
+               <input type="password" id="pass" name="password" placeholder="enter password">
+                
+                <label>CONFIRM PASSWORD</label>
+                <input type="password" id="conf_pass" name="conf_pass" placeholder="enter password again"> 
+                 
+                 <select>
+                  <option value="MEMBER">MEMBER</option>
+                  <option value="ADMIN">ADMIN</option>
+                </select>
+
+               <input type="submit" value="SUBMIT">
           </form>
 
        </div>
