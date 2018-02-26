@@ -62,9 +62,6 @@
 
 }
 
-
-
-
  @font-face{
  	font-family: caviar dreams;
  	src:url(/home/simran/ccs2/caviar_dreams/CaviarDreams.ttf);
@@ -155,4 +152,16 @@ footer{
 	font-size:30px;
 	color: #001f33;
 	font-weight: bold;
+}
+
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('../images/card.jpeg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
 }
