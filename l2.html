@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 
 <body >
@@ -54,36 +55,39 @@
         </div >
        <div class="login-box">
 
-            <button>Login Here</button>
-            <button>Sign Up</button> 
-            <br>
+            <button class="btn_log"onclick="showlogin()">Login Here</button>
+            <button class="btn_sign "onclick="showsignup()">Sign Up</button> 
+            <br><br>
 
-           <form name="login-form" action="" method="post">
+           <form id="showlogin" name="login-form" action="" method="post" onsubmit="return validate1()">
 
                <label for="name">USERNAME</label>
           	   <input type="text" id="name" name="username" placeholder="enter username">
 
           	   <label for="pass">PASSWORD</label>
-          	   <input type="password" id="pass" name="password" placeholder="enter password">
+          	   <input type="password" id="pass" name="password" placeholder="enter password" >
 
                  <select>
                 	<option value="MEMBER">MEMBER</option>
-                	<option value="ADMIN">ADMIN</option>
+                	<option value=s"ADMIN">ADMIN</option>
                 </select>
 
           	   <input type="submit" value="SUBMIT">
           </form>
 
            
-           <form name="login-form" action="" method="post">
+           <form id="showsup" name="sign-form" action="" method="post" onsubmit="return validate1()">
 
-               <label for="name">USERNAME</label>
-               <input type="text" id="name" name="username" placeholder="enter username">
+               <label for="name">USERNAME</labelw>
+               <input type="text" id="name" name="username " placeholder="enter username">
+               
+               <label for="ph">PHONE No.</label>
+               <input type="tel" id="ph" name="ph" placeholder="enter your number">
 
                <label for="pass">PASSWORD</label>
                <input type="password" id="pass" name="password" placeholder="enter password">
                 
-                <label>CONFIRM PASSWORD</label>
+                <label for="conf_pass">CONFIRM PASSWORD</label>
                 <input type="password" id="conf_pass" name="conf_pass" placeholder="enter password again"> 
                  
                  <select>
@@ -111,6 +115,37 @@
 
 </div>
 
+ <script type="text/javascript">
+
+
+  function showlogin(){
+    document.getElementById('showsup').style.display='none';
+    document.getElementById('showlogin').style.display='block';  
+
+  }
+  
+  function showsignup(){
+    document.getElementById('showlogin').style.display='none';
+    document.getElementById('showsup').style.display='block';
+  }
+
+
+  
+  function validate1()
+{
+  var x= document.forms["login-form"]["username"].value;
+  var y=document.forms["login-form"]["password"].value;
+  if((x=="")&&(y=="")){
+    alert("please fill the form first");
+    return false;
+  }
+}
+
+
+ 
+</script>
 
 </body>
+
+
 </html>
