@@ -71,12 +71,42 @@
 	font-family:caviar dreams;
 	font-weight:bold;
 	text-align: center;
-         padding:30px 70px 50px 70px;
+     padding:30px 70px 50px 70px;
 	text-decoration:none;
 	letter-spacing: 1.5px;
-        margin-top:35px;
-        margin-bottom: 50px;
+     margin-top:35px;
+     margin-bottom: 50px;
     }
+
+    .btn_log{
+    width: 50%;
+	background-color: white ;
+	color:black;
+	display : inline-block;
+	padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 4px;
+    margin:4px 2px;
+
+    }
+    .btn_sign{
+    width: 40%;
+	background-color: white ;
+	color:black;
+	display : inline-block;
+	padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 4px;
+
+    }
+
+     button:hover{
+
+	background-color:#001f33;
+    color:white;
+    }
+
+
 
 
 .login-box{
@@ -88,7 +118,7 @@
 	font-weight:bold;
     border-radius: 5px;
    	width: 400px;
-	height: 500px;
+
 	background: rgba(0,0,0,0.1);
 	color:#000000;
 	left:50%;
@@ -119,6 +149,20 @@ input[type=text],select{
 
 }
 
+input[type=password],[type=tel]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+
+}
+
+
+
 
 input[type=submit]{
 	width: 100%;
@@ -135,7 +179,9 @@ input[type=submit]{
 input[type=submit]:hover {
     background-color:  #004a80;
 }
-
+#showsup{
+	display:none;
+}
 
 
 footer{
