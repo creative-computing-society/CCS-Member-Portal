@@ -7,6 +7,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -67,12 +69,10 @@
 
           	   <label for="pass">PASSWORD</label>
           	   <input type="password" id="pass" name="password" placeholder="enter password" >
-
-                 <select>
-                	<option value="MEMBER">MEMBER</option>
-                	<option value=s"ADMIN">ADMIN</option>
-                </select>
-
+                  <div class="selecttype">
+                	<input type="radio" name="gender" value="male"> Member<br>
+  <input type="radio" name="gender" value="female">  Admin <br>
+</div>
           	   <input type="submit" value="SUBMIT">
           </form>
 
@@ -91,12 +91,9 @@
                 <label for="conf_pass">CONFIRM PASSWORD</label>
                 <input type="password" id="conf_pass" name="conf_pass" placeholder="enter password again"> 
                  
-                 <select>
-                  <option value="MEMBER">MEMBER</option>
-                  <option value="ADMIN">ADMIN</option>
-                </select>
-
-               <input type="submit" value="SUBMIT">
+                
+                
+               <input id="submitform" type="submit" value="SUBMIT">
           </form>
 
        </div>
