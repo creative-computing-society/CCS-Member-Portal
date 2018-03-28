@@ -1,6 +1,5 @@
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
-from passlib.hash import sha256_crypt as sha
  
 app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
  
