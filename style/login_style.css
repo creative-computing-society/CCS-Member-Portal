@@ -1,5 +1,11 @@
+
+ @font-face{
+ 	font-family: caviar dreams;
+ 	src:url(../caviar_dreams/CaviarDreams.ttf);
+ }
 *{
 	box-sizing: border-box;
+
 }
 .back{
 
@@ -63,13 +69,6 @@
 }
 
 
-
-
- @font-face{
- 	font-family: caviar dreams;
- 	src:url(/home/simran/ccs2/caviar_dreams/CaviarDreams.ttf);
- }
-
 .head{
 	font-family:caviar dreams;
 	font-weight:bold;
@@ -83,23 +82,29 @@
 
     .btn_log{
     width: 50%;
-	background-color: white ;
+	background-color: rgba(255,255,255,0);
 	color:black;
+	border: 2px solid rgba(0,0,0,0);
+	border-bottom: 2px solid #001f33;
+	font-family: 'Inconsolata', monospace;
 	display : inline-block;
 	padding: 10px 20px;
     font-size: 18px;
-    border-radius: 4px;
+    border-radius: 2px;
     margin:4px 2px;
 
     }
     .btn_sign{
     width: 40%;
-	background-color: white ;
-	color:black;
-	display : inline-block;
+	background-color: rgba(255,255,255,0);
+	color:grey;
+color:black;
+	border: 2px solid rgba(0,0,0,0);
+ 	font-family: 'Inconsolata', monospace;
+ 	display : inline-block;
 	padding: 10px 20px;
     font-size: 18px;
-    border-radius: 4px;
+    border-radius: 2px;
 
     }
 
@@ -115,7 +120,7 @@
 .login-box{
 	margin-top:200px;
 	margin-bottom: 50px;
-	font-family: caviar dreams;
+	font-family: 'Inconsolata', monospace;
 
 	letter-spacing: 1.5px;
 	font-weight:bold;
@@ -142,34 +147,47 @@
 }
 input[type=text],select{
   width: 100%;
-  padding: 12px 20px;
+  padding: 5px 20px;
   margin: 8px 0px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
    box-sizing: border-box;
+  margin-bottom: 20px;
 
 
 }
+input[type=email],select{
+  width: 100%;
+  padding: 5px 20px;
+  margin: 8px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+   box-sizing: border-box;
+  margin-bottom: 20px;
 
+
+}
 input[type=password],[type=tel]{
   width: 100%;
-  padding: 12px 20px;
+  padding: 5px 20px;
   margin: 8px 0px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  margin-bottom: 20px;
 
 
 }
-
-
-
+.selecttype{
+  margin-bottom: 10px;
+}
 
 input[type=submit]{
 	width: 100%;
-	background-color:  #001f33;
+	background-color:  rgba(16,16,16,0.9);
 	color: white;
 	padding: 14px 20px;
 	margin: 8px 0;
@@ -180,7 +198,7 @@ input[type=submit]{
 }
 
 input[type=submit]:hover {
-    background-color:  #004a80;
+    background-color:  #001f33;
 }
 #showsup{
 	display:none;
@@ -201,4 +219,16 @@ footer{
 	font-size:30px;
 	color: #001f33;
 	font-weight: bold;
+}
+
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('../images/card.jpeg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
 }
