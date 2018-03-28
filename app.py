@@ -1,8 +1,8 @@
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
- 
+
 app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
- 
+
 Database = 'ccslog.db'
 
 def get_db():
@@ -34,9 +34,10 @@ def close_connection(exception):
 def home():
     return "Hello World"
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
     app.run(host = "0.0.0.0",debug=True, port=8080)
-
-
-
