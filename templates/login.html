@@ -62,7 +62,7 @@
             <button class="btn_sign" id="sign-but" onclick="showsignup()">Sign Up</button>
             <br><br>
 
-           <form id="showlogin" name="login-form" action="" method="post" onsubmit="return validate1()">
+           <form id="showlogin" name="login-form" action="/login" method="post">
 
                <label for="name">USERNAME</label>
           	   <input type="text" id="name" name="username" placeholder="enter username">
@@ -77,16 +77,16 @@
           </form>
 
 
-           <form id="showsup" name="sign-form" action="" method="post" onsubmit="return validate1()">
+           <form id="showsup" action="/signup" method="post">
 
                <label for="name">NAME</label>
-               <input type="text" id="name" name="name " placeholder="enter name">
+               <input type="text" id="name" name="name" placeholder="enter name">
 
                <label for="name">USERNAME</label>
-               <input type="text" id="username" name="username " placeholder="enter username">
+               <input type="text" id="username" name="username" placeholder="enter username">
 
               <label for="name">EMAIL</label>
-               <input type="email" id="email" name="email " placeholder="enter email">
+               <input type="email" id="email" name="email" placeholder="enter email">
 
                <label for="ph">PHONE No.</label>
                <input type="tel" id="ph" name="ph" placeholder="enter your number">
