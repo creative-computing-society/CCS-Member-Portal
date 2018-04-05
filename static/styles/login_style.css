@@ -3,15 +3,11 @@
  	font-family: caviar dreams;
  	src:url(../caviar_dreams/CaviarDreams.ttf);
  }
-*{
-	box-sizing: border-box;
 
-}
 .back{
 
 	margin: 0px 0px;
 	padding: 0px;
-	font-family: helvetica;
     width:100vw;
 	height: 100vh;
 	position: absolute;
@@ -19,7 +15,7 @@
 	overflow-y: scroll;
   }
 
-.navbar{
+/*.navbar{
 	margin-left: -20px;
 	margin-right: -20px;
 }
@@ -30,56 +26,23 @@
 
 #topnav a:hover{
 	color:#b3e0ff;
-}
-
-@media screen and (max-width: 1920px){
-
-	.back{
-
-	background-image: url('../images/bk2l.jpeg');
-	background-repeat: no-repeat;
-	background-size: cover;
-
-  }
-
-}
+}*/
 
 
-@media screen and (max-width:1280px){
-	.back{
-	background-image: url('../images/bk2m.jpeg');
-	background-repeat: no-repeat;
-	background-size: cover;
-  }
-
-
-
-}
-
-
-
-@media screen and (max-width:640px){
-	.back{
-	background-image: url('..images/bk2s.jpeg');
-	background-repeat: no-repeat;
-	background-size: cover;
-
-  }
-
-}
-
-
-.head{
+.head, .head h1{
 	font-family:caviar dreams;
 	font-weight:bold;
 	text-align: center;
-     padding:30px 70px 50px 70px;
+
+  	font-size: 60px;
+ /*    padding:30px 70px 50px 70px;
 	text-decoration:none;
-	letter-spacing: 1.5px;
-     margin-top:35px;
-     margin-bottom: 50px;
+	letter-spacing: 1.5px;*/
+	top: 20px;
+	position: relative;
     }
 
+/*
     .btn_log{
     width: 50%;
 	background-color: rgba(255,255,255,0);
@@ -115,99 +78,37 @@ color:black;
     }
 
 
-
+*/
 
 .login-box{
-	margin-top:200px;
-	margin-bottom: 50px;
-	font-family: 'Inconsolata', monospace;
+	top: 400px;
 
 	letter-spacing: 1.5px;
 	font-weight:bold;
     border-radius: 5px;
    	width: 400px;
 
-	background: rgba(0,0,0,0.1);
+	background: rgba(255,255,255,0);
 	color:#000000;
 	left:50%;
-	position:absolute;
+	position:relative;
 	transform: translate(-50%,-50%);
 	box-sizing: border-box;
     padding: 40px 30px;
    }
-
-
-.form{
-
-	position: relative;
-	z-index: 2;
-	max-width: 320px;
-	margin: 0 auto 100px;
-
-}
-input[type=text],select{
-  width: 100%;
-  padding: 5px 20px;
-  margin: 8px 0px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-   box-sizing: border-box;
-  margin-bottom: 20px;
-
-
-}
-input[type=email],select{
-  width: 100%;
-  padding: 5px 20px;
-  margin: 8px 0px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-   box-sizing: border-box;
-  margin-bottom: 20px;
-
-
-}
-input[type=password],[type=tel]{
-  width: 100%;
-  padding: 5px 20px;
-  margin: 8px 0px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-
-
-}
-.selecttype{
+/*.selecttype{
   margin-bottom: 10px;
 }
 
-input[type=submit]{
-	width: 100%;
-	background-color:  rgba(16,16,16,0.9);
-	color: white;
-	padding: 14px 20px;
-	margin: 8px 0;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
 
-}
-
-input[type=submit]:hover {
-    background-color:  #001f33;
-}
 #showsup{
 	display:none;
 }
 
-
+*/
 footer{
   font-family:caviar dreams	;
-  margin-top:580px;
+  top: 800px;
   position: absolute;
   left:50%;
   transform: translate(-50%,-50%);
@@ -221,14 +122,51 @@ footer{
 	font-weight: bold;
 }
 
-.demo-card-wide.mdl-card {
-  width: 512px;
+
+
+
+
+@media screen and (min-width: 1281px){
+
+	.back{
+
+	background-image: url('../images/bk2l.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+
+  }
+
 }
-.demo-card-wide > .mdl-card__title {
-  color: #fff;
-  height: 176px;
-  background: url('../images/card.jpeg') center / cover;
+
+
+@media screen and (max-width:1280px) and (min-width: 641px){
+	.back{
+	background-image: url('../images/bk2m.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+  }
+
+  .head h1{
+  	font-size: 45px;
+  }
+#tag{
+	font-size:20px;
 }
-.demo-card-wide > .mdl-card__menu {
-  color: #fff;
+}
+
+
+
+@media screen and (max-width:640px){
+	.back{
+	background-image: url('../images/bk2s.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+
+  }
+  .head h1{
+  	font-size: 35px;
+  }
+#tag{
+	font-size:15px;
+}
 }

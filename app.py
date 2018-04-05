@@ -81,6 +81,11 @@ def signup():
 
     return redirect(url_for("login"))
 
+@app.route('/profile/<username>')
+def profile(username):
+    row=query_db('select * from users')
+    return render_template('profile.html', un=username, row=row)
+
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
     app.run(host = "0.0.0.0",debug=True, port=8080)
