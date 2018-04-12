@@ -1,11 +1,33 @@
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
+from functools import wraps
 
 
 app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
 
 Database = 'ccslog.db'
+
+if app.config["DEBUG"]:
+    @app.after_request
+    def after_request(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Expires"] = 0
+        response.headers["Pragma"] = "no-cache"
+        return response
+
+""" app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem" 
+Session(app) """
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("username") is None:
+            return redirect(url_for("login", next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -33,8 +55,10 @@ def close_connection(exception):
         db.close()
 
 @app.route('/')
+@login_required
 def home():
-    return "Hello World"
+    redirect(url_for("profile",username=session['username']))
+
 
 @app.route('/login',methods=['POST','GET'])
 def login():
@@ -49,6 +73,7 @@ def login():
             return "Username doesnt exist"
 
         if sha.verify(password, phash[0][0]):
+            session["username"] = username
             return redirect(url_for('profile', username=username))
         else:
             return "Password Incorrect"
@@ -86,9 +111,42 @@ def signup():
         return redirect(url_for("login"))
 
 @app.route('/profile/<username>')
+@login_required
 def profile(username):
     row=query_db('select * from users')
     return render_template('profile.html', un=username, row=row)
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+@app.route("/change", methods=["GET", "POST"])
+@login_required
+def change():
+    if request.method == "GET":
+        render_template("change.html")
+    else:
+        password = request.form["old_password"]
+        old_password = query_db("select password from users where username = ?", (session["username"],))
+        if sha.verify(password, old_password[0][0]):
+            submission = {}
+            submission["pass"] = request.form["password"]
+            submission["conf_pass"] = request.form["conf_pass"]
+            
+            if submission["pass"]!=submission["conf_pass"]:
+                flash("Password doesnt match")
+                return redirect(url_for("change"))
+            
+            password = sha.encrypt(submission["pass"])
+            
+            execute_db("update users set password = ? where username = ?", (
+            password,
+            session["username"],))
+            return redirect(url_for("login"))
+        else:
+            flash("Wrong Password")
+            return redirect(url_for("change"))
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
