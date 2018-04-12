@@ -41,6 +41,7 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
+        error = None
         username=request.form["username"]
         password=request.form["password"]
         phash = query_db("select password from users where username = ?", (username, ))
@@ -48,38 +49,41 @@ def login():
             return "Username doesnt exist"
 
         if sha.verify(password, phash[0][0]):
-            return "Suc"
+            return redirect(url_for('profile', username=username))
         else:
-            return "Fil"
+            return "Password Incorrect"
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    submission = {}
-    submission["username"] = request.form["username"]
-    submission["name"] = request.form["name"]
-    submission["email"] = request.form["email"]
-    submission["phone"] = request.form["ph"]
-    submission["pass"] = request.form["password"]
-    submission["conf_pass"] = request.form["conf_pass"]
+    if request.method == "GET":
+        return render_template("signup.html")
+    else:
+        submission = {}
+        submission["username"] = request.form["username"]
+        submission["name"] = request.form["name"]
+        submission["email"] = request.form["email"]
+        submission["phone"] = request.form["ph"]
+        submission["pass"] = request.form["password"]
+        submission["conf_pass"] = request.form["conf_pass"]
 
 
-    if submission["pass"]!=submission["conf_pass"]:
-        return "Wrong password"
+        if submission["pass"]!=submission["conf_pass"]:
+            return "Wrong password"
 
-    if query_db("select username from users where username = ?", (submission["username"],))!=[]:
-        return "Username already taken" 
+        if query_db("select username from users where username = ?", (submission["username"],))!=[]:
+            error = "Username already taken" 
 
-    password = sha.encrypt(submission["pass"])
-    execute_db("insert into users values(?,?,?,?,?,0)", (
-        submission["username"],
-        submission["name"],
-        submission["email"],
-        password,
-        submission["phone"],
-    ))
+        password = sha.encrypt(submission["pass"])
+        execute_db("insert into users values(?,?,?,?,?,0)", (
+            submission["username"],
+            submission["name"],
+            submission["email"],
+            password,
+            submission["phone"],
+        ))
 
-    return redirect(url_for("login"))
+        return redirect(url_for("login"))
 
 @app.route('/profile/<username>')
 def profile(username):
