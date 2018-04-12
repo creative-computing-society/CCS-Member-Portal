@@ -1,0 +1,31 @@
+{% extends 'dashboard.html' %}
+
+
+
+{% block username %}
+	{{ un }}
+{% endblock %}
+
+
+
+{% block cards %}
+	{% for member in row %}
+		
+
+
+           <!-- place cards here -->
+
+<!-- Image card -->
+
+<div class="demo-card-image mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand"></div>
+  <div class="mdl-card__actions">
+    <span class="demo-card-image__filename">{{ member[1] }}</span>
+  </div>
+</div>
+
+       
+	{% endfor %}
+
+
+{% endblock %}
