@@ -4,6 +4,7 @@
 
 
 
+
 {% block logbox %}
 <div class="login-box ">
   <div class="column">
@@ -13,7 +14,7 @@
         Log-in to your account
       </div>
     </h2>
-    <form class="ui large form">
+    <form class="ui large form" action="{{ url_for('login') }}" method="post">
       <div class="ui stacked segment">
         <div class="field">
           <div class="ui left icon input">
@@ -35,7 +36,7 @@
     </form>
 
     <div class="ui message">
-      New to us? <a href="#">Sign Up</a>
+      New to us? <a href="{{ url_for('signup') }}">Sign Up</a>
     </div>
   </div>
 </div>
