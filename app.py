@@ -2,6 +2,7 @@ import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
 from functools import wraps
+from datetime import datetime,strptime
 
 
 app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
@@ -74,7 +75,7 @@ def login():
 
         if sha.verify(password, phash[0][0]):
             session["username"] = username
-            return redirect(url_for('profile', username=username))
+            return redirect(url_for('profile'))
         else:
             return "Password Incorrect"
 
@@ -110,11 +111,32 @@ def signup():
 
         return redirect(url_for("login"))
 
-@app.route('/profile/<username>')
+@app.route('/members')
 @login_required
-def profile(username):
+def profile():
     row=query_db('select * from users')
-    return render_template('profile.html', un=username, row=row)
+    return render_template('member.html', un=session["username"], row=row)
+
+@app.route('/events')
+@login_required(
+def events():
+    events=query_db('select * from events')
+    upcoming=[]
+    logs=[]
+    current_time = datetime.now()
+    for x in events:
+        temp_time = strptime(x[3],'%b %d %Y %I:%M%p')
+        if(current_time>temp_time):
+            logs.append(x)
+        else:
+            upcoming.append(x)
+    return render_template('events.html', un=session["username"], upcoming=upcoming, logs=logs)
+
+@app.route('/projects')
+@login_required
+def projects():
+    row=query_db('select * from projects')
+    return render_template('projects.html', un=session["username"], row=row)
 
 @app.route("/logout")
 def logout():
