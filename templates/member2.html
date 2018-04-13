@@ -1,0 +1,38 @@
+{% extends 'dashboard.html' %}
+
+{% block username %}
+	{{ un }}
+{% endblock %}
+
+
+{% block cards %}
+<h2>Members</h2>
+
+{% for member in  row %}
+ <div class="ui link cards " href="log1.html" >
+  <div class="card">
+    <div class="image">
+      <img src="image1.png">
+    </div>
+    <div class="content">
+      <div class="header">{% member[1]%}</div>
+      <div class="meta">
+      </div>
+      <div class="description">
+        {% member[2] %}
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        <a href="">Follow<a>
+      </span>
+      <span>
+        <i class="user icon"></i>
+        75 Friends
+      </span>
+    </div>
+
+{% endfor %}
+
+
+{% endblock %}
