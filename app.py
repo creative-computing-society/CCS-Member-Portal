@@ -2,7 +2,8 @@ import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
 from functools import wraps
-from datetime import datetime,strptime
+from datetime import datetime
+from time import strptime
 
 
 app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
@@ -108,17 +109,16 @@ def signup():
             password,
             submission["phone"],
         ))
-
         return redirect(url_for("login"))
 
 @app.route('/members')
 @login_required
 def profile():
     row=query_db('select * from users')
-    return render_template('member.html', un=session["username"], row=row)
+    return render_template('member2.html', un=session["username"], row=row)
 
 @app.route('/events')
-@login_required(
+@login_required
 def events():
     events=query_db('select * from events')
     upcoming=[]
