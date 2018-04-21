@@ -20,7 +20,7 @@ if app.config["DEBUG"]:
 
 """ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem" 
+app.config["SESSION_TYPE"] = "filesystem"
 Session(app) """
 
 def login_required(f):
@@ -99,7 +99,7 @@ def signup():
             return "Wrong password"
 
         if query_db("select username from users where username = ?", (submission["username"],))!=[]:
-            error = "Username already taken" 
+            error = "Username already taken"
 
         password = sha.encrypt(submission["pass"])
         execute_db("insert into users values(?,?,?,?,?,0)", (
@@ -115,7 +115,7 @@ def signup():
 @login_required
 def profile():
     row=query_db('select * from users')
-    return render_template('member2.html', un=session["username"], row=row)
+    return render_template('member.html', un=session["username"], row=row)
 
 @app.route('/events')
 @login_required
@@ -155,13 +155,13 @@ def change():
             submission = {}
             submission["pass"] = request.form["password"]
             submission["conf_pass"] = request.form["conf_pass"]
-            
+
             if submission["pass"]!=submission["conf_pass"]:
                 flash("Password doesnt match")
                 return redirect(url_for("change"))
-            
+
             password = sha.encrypt(submission["pass"])
-            
+
             execute_db("update users set password = ? where username = ?", (
             password,
             session["username"],))
