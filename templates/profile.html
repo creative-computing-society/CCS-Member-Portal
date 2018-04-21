@@ -9,11 +9,45 @@
 
 
 {% block cards %}
-	{% for member in row %}
+{% if upcoming!=NULL %}
+
+<h2>Upcoming Events</h2>
+	{% for event in upcoming %}
 		
 
+ <div class="ui card" href="" >
+  <div class="content">
+    <div class="header">{% event[1] %}</div>
+  </div>
+  <div class="content">
+  <div class="meta">
+        <span class="date">{% event[3] %}</span>
+      </div>
 
-           <!-- place cards here -->
+    <h3 class="ui sub header">{% event[2] %}</h3>
+    <div class="ui small feed">
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+             <a>Elliot Fu</a> taught......
+          </div>
+        </div>
+      </div>
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+             knapsack problem ...covered by <a>Jenny</a> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="extra content">
+    <div class="right floated"> 
+      <button class="ui button">edit</button>
+       <button class="ui button">delete</button>
+    </div>
+   </div>
 
 <!-- Image card -->
 
@@ -24,8 +58,64 @@
   </div>
 </div>
 
-       
+
 	{% endfor %}
 
+
+{% endif %}
+
+
+<h2>Events log</h2>
+	{% for event in logs %}
+		
+
+ <div class="ui card" href="" >
+  <div class="content">
+    <div class="header">{% event[1] %}</div>
+  </div>
+  <div class="content">
+  <div class="meta">
+        <span class="date">{% event[3] %}</span>
+      </div>
+
+    <h3 class="ui sub header">{% event[2] %}</h3>
+    <div class="ui small feed">
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+             <a>Elliot Fu</a> taught......
+          </div>
+        </div>
+      </div>
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+             knapsack problem ...covered by <a>Jenny</a> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="extra content">
+    <div class="right floated"> 
+      <button class="ui button">edit</button>
+       <button class="ui button">delete</button>
+    </div>
+   </div>
+
+<!-- Image card -->
+
+<div class="demo-card-image mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand"></div>
+  <div class="mdl-card__actions">
+    <span class="demo-card-image__filename">{{ member[1] }}</span>
+  </div>
+</div>
+
+
+	{% endfor %}
+
+
+       
 
 {% endblock %}
