@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% block content %}
+
+{% for event in row %}
+<h2>EVENTS LOGS</h2>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{ % event[1] %}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{% event[3] %}</h6>
+    <p class="card-text">{% event[2] %}</p>
+    <a href="#" class="card-link">EDIT</a>
+    <a href="#" class="card-link">DELETE</a>
+  </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}
