@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>CCS MEETUP</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/animate.css">
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	{% block content %}
+    {% endblock %}
+
+
+<!--===============================================================================================-->
+	<script src="/js/jquery-1.10.2.min.js"></script>
+<!--===============================================================================================-->
+	<!-- <script src="/vendor/bootstrap/js/popper.js"></script> -->
+	<script src="/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<!-- <script src="/vendor/tilt/tilt.jquery.min.js"></script> -->
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-23581568-13');
+</script>
+
+<!--===============================================================================================-->
+
+ <script type="text/javascript">
+  function showlogin(){
+    document.getElementById('showsup').style.display='none';
+    document.getElementById('showlogin').style.display='block';  
+  }
+  
+  function showsignup(){
+    document.getElementById('showlogin').style.display='none';
+    document.getElementById('showsup').style.display='block';
+  }
+</script>
+
+	<script src="/js/main.js"></script>
+
+</body>
+</html>

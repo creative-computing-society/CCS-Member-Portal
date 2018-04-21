@@ -1,19 +1,74 @@
 {% extends 'index.html' %}
 {% block content %}
 
-{% for event in logs %}
-<h2>EVENTS LOGS</h2>
 
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{event[1]}}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{event[3]}}</h6>
-    <p class="card-text">{{ event[2] }}</p>
-    <a href="#" class="card-link">EDIT</a>
-    <a href="#" class="card-link">DELETE</a>
-  </div>
-</div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                  {% for event in logs %}
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="{{ event[4] }}" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">{{ event[1] }}<br />
+                                     <a href="#"><small>{{ event[3] }}</small></a>
+                                  </h4>
 
-{% endfor %}
+                                <p class="description text">
+                                    {{ event[2] }}
+
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                            </div>
+                          </div>
+                      </div>
+
+                    {% endfor %}
+
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">Title<br>
+                                     <a href="#"><small>date</small></a>
+                                  </h4>
+
+                                <p class="description text">
+                                   content
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                           </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">Title<br>
+                                     <a href="#"><small>date</small></a>
+                                  </h4>
+
+                                <p class="description text">
+                                   content
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                           </div>
+                        </div>
+                    </div>
+
+
+                        </div>
+                    </div>
+                  </div>
 
 {% endblock %}
