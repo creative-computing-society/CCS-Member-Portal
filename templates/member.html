@@ -14,23 +14,29 @@
                                   </h4>
                                 </div>
                                 <p class="description text-center">
-                                    "I like the way you work it <br>
-                                    No diggity <br>
-                                    I wanna bag it up"
+                                    {{ user[2] }}
                                 </p>
                             </div>
                             <hr>
                             <div class="text-center">
                                 <div class="row">
-                                    <div class="col-md-3 col-md-offset-1">
-                                        <h5><i class="ti-github"></i><br /><small>Github</small></h5>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3">
+                                        <a href="mailto:{{ user[2] }}">
+                                            <h5><i class="ti-email"></i><br /><small>Mail</small></h5>
+                                        </a>
                                     </div>
                                     <div class="col-md-3">
-                                        <h5><i class="ti-linkedin"></i><br /><small>LinkedIn</small></h5>
+                                        <a href="tel:91-{{ user[4] }}">
+                                            <h5><i class="ti-mobile"></i><br /><small>Call</small></h5>
+                                        </a>
                                     </div>
+                                    <div class="col-md-3"></div>
+                                    <!--
                                     <div class="col-md-3">
                                         <h5><i class="ti-facebook"></i><br /><small>Facebook</small></h5>
                                     </div>
+                                    -->
                                 </div>
                             </div>
                         </div>

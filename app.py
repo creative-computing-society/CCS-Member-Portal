@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
