@@ -1,53 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/card.css">
+{% extends 'index.html' %}
 
-  <style type="text/css">
-    .ui.card{
-      height: 280px;
-    }
-  </style>
-</head>
-<body>
-  <div class="ui card" href="" >
-  <div class="content">
-    <div class="header">Project Title</div>
+{% block content %}
+    {% for projects in row %}
+        
+
+<div class="card" style="width: 18rem;">
+<img class="card-img-top" src="{{ projects[3] }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ projects[1] }}</h5>  <!--  Card Title -->
+    <p class="card-text">{{ projects[2] }}</p>    <!--  Content -->
+    <a href="{{ projects[4] }}" class="card-link">Apply</a>
+    <a href="#" class="card-link">Edit</a>
+    <a href="#" class="card-link">Delete</a>
   </div>
-  <div class="content">
-  <div class="meta">
-  <div class="ui slide masked reveal image">
-    <img src="/">
-  </div> 
-        <span class="date">dd/mm/yy</span>
-      </div>
-
-    <!-- <h3 class="ui sub header">Topics Covered</h3> -->
-    <div class="ui small feed">
-      <div class="event">
-      </div>
-      <div class="event">
-        <div class="content">
-          <div class="summary">
-            contentvfdbvnfvbfjfjkkcb fdjk
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="extra content">
-    <div class="right floated"> 
-      <button class="ui button">Apply</button>
-      <button class="ui button">edit</button>
-       <button class="ui button">delete</button>
-    </div>
-   </div>
-
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-</body>
-</html>
+    {% endfor %}
+
+
+{% endblock %}
