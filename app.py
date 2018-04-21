@@ -18,11 +18,6 @@ if app.config["DEBUG"]:
         response.headers["Pragma"] = "no-cache"
         return response
 
-""" app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem" 
-Session(app) """
-
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -115,7 +110,7 @@ def signup():
 @login_required
 def profile():
     row=query_db('select * from users')
-    return render_template('member2.html', un=session["username"], row=row)
+    return render_template('member.html', un=session["username"], row=row)
 
 @app.route('/events')
 @login_required
@@ -137,7 +132,6 @@ def events():
 def projects():
     row=query_db('select * from projects')
     return render_template('projects.html', un=session["username"], row=row)
-
 
 @app.route('/addprojects', methods=['GET', 'POST'])
 def addproject():
@@ -182,9 +176,6 @@ def addevents():
                 submission["images"],
             ))
         return redirect(url_for("events"))
-
-
-
 
 @app.route("/logout")
 def logout():
