@@ -41,22 +41,25 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
+                    <a class="simple-text">
+                        Creative Computing Society
+                    </a>
             </div>
 
         		<ul class="nav">
-                <li>
+                <li {% if request.path == url_for('events') %}class="active"{% endif %}>
                     <a href="{{ url_for('events')}}">
-												<i class="ti-calendar"></i>
+						<i class="ti-calendar"></i>
                         <p>Events</p>
                     </a>
                 </li>
-                <li>
+                <li {% if request.path == url_for('profile') %}class="active"{% endif %}>
                     <a href="{{ url_for('profile') }}">
                         <i class="ti-user"></i>
                         <p>Members</p>
                     </a>
                 </li>
-                <li>
+                <li {% if request.path == url_for('projects') %}class="active"{% endif %}>
                     <a href="{{ url_for('projects') }}">
                         <i class="ti-pencil-alt"></i>
                         <p>Projects</p>
@@ -159,6 +162,30 @@
 	<script src="/js/paper-dashboard.js"></script>
 
 	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-	<script src="/js/demo.js"></script>
+    <script src="/js/demo.js"></script>
+
+    <script type="text/javascript">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				function flashMessages() {
+					{% for category, message in messages %}
+					$.notify({
+						icon: "ti-bell",
+						message: '{{ message }}'
+					},{
+						type: '{{ category }}',
+						timer: 4000,
+						placement: {
+							from: "top",
+							align: "center"
+					}
+					});
+					{% endfor %}
+				}
+        		window.onload = flashMessages;
+            {% endif %}
+        {% endwith %}
+    </script>
+
 
 </html>
