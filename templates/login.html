@@ -1,15 +1,14 @@
 
 
-{% extends 'login-layout.html' %}
+{% extends 'index.html' %}
 
 
 
 
-{% block logbox %}
+{% block content %}
 <div class="login-box ">
   <div class="column">
     <h2 class="ui teal image header">
-      <img src="../images/ccs-logo.png" class="image">
       <div class="content">
         Log-in to your account
       </div>
@@ -28,7 +27,7 @@
             <input type="password" id="pass" name="password" placeholder="Password">
           </div>
         </div>
-        <div class="ui fluid large teal submit button">Login</div>
+        <button class="btn btn-primary" type="submit">Login</button>
       </div>
 
       <div class="ui error message"></div>
