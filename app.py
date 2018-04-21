@@ -152,12 +152,37 @@ def addproject():
         if query_db("select title from projects where title = ?", (submission["title"],))!=[]:
             error = "Project Title already exists! Please change the title." 
         else:
-            execute_db("insert into projects values(?,?,?,0)", (
+            execute_db("insert into projects (title, content, images, canapp) values(?,?,?,0)", (
                 submission["title"],
                 submission["content"],
                 submission["images"],
             ))
         return redirect(url_for("projects"))
+
+
+@app.route('/addevents', methods=['GET', 'POST'])
+def addevents():
+    if request.method == "GET":
+        return render_template("events.html")
+    else:
+        submission = {}
+        submission["title"] = request.form["title"]
+        submission["content"] = request.form["content"]
+        submission["date"] = request.form["date"]
+        submission["images"] = request.form["images"]
+
+
+        if query_db("select title from events where title = ?", (submission["title"],))!=[]:
+            error = "Events Title already exists! Please change the title." 
+        else:
+            execute_db("insert into events (title, content, date , images) values(?,?,?,?)", (
+                submission["title"],
+                submission["content"],
+                submission["date"],
+                submission["images"],
+            ))
+        return redirect(url_for("events"))
+
 
 
 
