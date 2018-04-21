@@ -1,31 +1,41 @@
- {% extends 'index.html' %} {% block content %}
-  {% for a in row %} 
-  {% if loop.index0 % 3 == 0 %}
-    <div class="row">
-  {% endif %}
-<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-  <div class="team-block">
-    <div class="team-img">
-      <img src="https://easetemplate.com/free-website-templates/motion/images/team_member_1.jpg" alt="">
-      <div class="team-content">
-        <h4 class="text-white mb0">{{ a[1] }}</h4>
-        <p class="team-meta">-{{ a[2] }}</p>
-      </div>
-      <div class="overlay">
-        <div class="text">
-          <h4 class="mb0 text-white">{{ a[1] }}</h4>
-          <p class="mb30 team-meta">{{ a[2] }}</p>
-          <p>Mauris tincidunt dolor eget diam dapibus vitae finibusnisl friuisque pretiuam egete euismod justam ac temlibern
-            rutrum nisli in mi rhoncac pharetra odioacin ntesque dictum vel risus quis egeaecenas necese purus quaroin tincidunt
-            neque malesuda vulputate lecton pretiume.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  {% if loop.index0 % 3 == 2 or loop.last %}
-    </div>
-  {% endif %}`
-  {% endfor %}
+ {% extends 'index.html' %} 
+ {% block content %}
 
+  <div class="row">
+    {% for user in row %}
+                    <div class="col-lg-4 col-md-5">
+                         <div class="card card-user">
+                            <div class="content">
+                              <br><br><br>
+                                <div class="author">
+                                  <img class="avatar border-white" src="/img/faces/face-2.jpg" alt="..."/>
+                                  <h4 class="title">{{ user[1] }}<br />
+                                     <a href="#"><small>@{{ user[0] }}</small></a>
+                                  </h4>
+                                </div>
+                                <p class="description text-center">
+                                    "I like the way you work it <br>
+                                    No diggity <br>
+                                    I wanna bag it up"
+                                </p>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <div class="row">
+                                    <div class="col-md-3 col-md-offset-1">
+                                        <h5><i class="ti-github"></i><br /><small>Github</small></h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5><i class="ti-linkedin"></i><br /><small>LinkedIn</small></h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5><i class="ti-facebook"></i><br /><small>Facebook</small></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                        {% endfor %}
+
+</div>
 {% endblock %}
