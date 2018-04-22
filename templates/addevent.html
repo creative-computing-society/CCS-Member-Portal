@@ -1,4 +1,4 @@
- {% extends 'index.html' %} 
+ {% extends 'index.html' %}
  {% block content %}
 
 
@@ -8,9 +8,10 @@
                                 <h4 class="title">Add Events</h4>
                             </div>
                             <div class="content">
-                                <form>
+                                <form method="post" action="{{ url_for('addevents') }}">
                                     <div class="row">
                                         <div class="col-md-12">
+
                                             <div class="form-group">
                                                 <label>Title</label>
                                                 <input class="form-control border-input" name="title" placeholder="Title Of Event" value="" type="text">
@@ -18,14 +19,14 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="row">
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Date</label>
                                                 <input class="form-control border-input" name="date" placeholder="Date" value="" type="text">
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-12">
@@ -40,7 +41,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Content</label>
-                                                <textarea rows="5" class="form-control border-input" name="content" placeholder="Event Content value=""></textarea>
+                                                <textarea rows="5" class="form-control border-input" name="content" placeholder="Event Content value="></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -52,4 +53,4 @@
                             </div>
                         </div>
                     </div>
-{% endblock %}           
+{% endblock %}
