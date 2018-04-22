@@ -139,11 +139,11 @@ def projects():
     row=query_db('select * from projects')
     return render_template('projects.html', un=session["username"], row=row)
 
-@app.route('/addprojects', methods=['GET', 'POST'])
+@app.route('/addproject', methods=['GET', 'POST'])
 @login_required
 def addproject():
     if request.method == "GET":
-        return render_template("projects.html")
+        return render_template("addproject.html")
     else:
         submission = {}
         submission["title"] = request.form["title"]
@@ -165,7 +165,7 @@ def addproject():
 @login_required
 def addevents():
     if request.method == "GET":
-        return render_template("events.html")
+        return render_template("addevent.html")
     else:
         submission = {}
         submission["title"] = request.form["title"]
