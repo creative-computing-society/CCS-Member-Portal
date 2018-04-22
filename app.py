@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
@@ -17,11 +18,6 @@ if app.config["DEBUG"]:
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
         return response
-
-""" app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem" 
-Session(app) """
 
 def login_required(f):
     @wraps(f)
@@ -72,13 +68,15 @@ def login():
         password=request.form["password"]
         phash = query_db("select password from users where username = ?", (username, ))
         if phash==[]:
-            return "Username doesnt exist"
+            flash("User does not exist","danger")
+            return render_template("login.html")
 
         if sha.verify(password, phash[0][0]):
             session["username"] = username
             return redirect(url_for('profile'))
         else:
-            return "Password Incorrect"
+            flash("Incorrect Password","danger")
+            return render_template("login.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -96,10 +94,12 @@ def signup():
 
 
         if submission["pass"]!=submission["conf_pass"]:
-            return "Wrong password"
+            flash("Passwords don't match","danger")
+            return render_template("signup.html")
 
         if query_db("select username from users where username = ?", (submission["username"],))!=[]:
-            error = "Username already taken" 
+            flash("User already taken","danger")
+            return render_template("signup.html")
 
         password = sha.encrypt(submission["pass"])
         execute_db("insert into users values(?,?,?,?,?,0)", (
@@ -109,13 +109,14 @@ def signup():
             password,
             submission["phone"],
         ))
+        flash("User Created","success")
         return redirect(url_for("login"))
 
 @app.route('/members')
 @login_required
 def profile():
     row=query_db('select * from users')
-    return render_template('member2.html', un=session["username"], row=row)
+    return render_template('member.html', un=session["username"], row=row)
 
 @app.route('/events')
 @login_required
@@ -138,9 +139,56 @@ def projects():
     row=query_db('select * from projects')
     return render_template('projects.html', un=session["username"], row=row)
 
+@app.route('/addprojects', methods=['GET', 'POST'])
+@login_required
+def addproject():
+    if request.method == "GET":
+        return render_template("projects.html")
+    else:
+        submission = {}
+        submission["title"] = request.form["title"]
+        submission["content"] = request.form["content"]
+        submission["images"] = request.form["images"]
+
+        if query_db("select title from projects where title = ?", (submission["title"],))!=[]:
+            error = "Project Title already exists! Please change the title." 
+        else:
+            execute_db("insert into projects (title, content, images, canapp) values(?,?,?,0)", (
+                submission["title"],
+                submission["content"],
+                submission["images"],
+            ))
+        return redirect(url_for("projects"))
+
+
+@app.route('/addevents', methods=['GET', 'POST'])
+@login_required
+def addevents():
+    if request.method == "GET":
+        return render_template("events.html")
+    else:
+        submission = {}
+        submission["title"] = request.form["title"]
+        submission["content"] = request.form["content"]
+        submission["date"] = request.form["date"]
+        submission["images"] = request.form["images"]
+
+
+        if query_db("select title from events where title = ?", (submission["title"],))!=[]:
+            error = "Events Title already exists! Please change the title." 
+        else:
+            execute_db("insert into events (title, content, date , images) values(?,?,?,?)", (
+                submission["title"],
+                submission["content"],
+                submission["date"],
+                submission["images"],
+            ))
+        return redirect(url_for("events"))
+
 @app.route("/logout")
 def logout():
     session.clear()
+    flash("Logout success","success")
     return redirect(url_for("login"))
 
 @app.route("/change", methods=["GET", "POST"])
@@ -157,7 +205,7 @@ def change():
             submission["conf_pass"] = request.form["conf_pass"]
             
             if submission["pass"]!=submission["conf_pass"]:
-                flash("Password doesnt match")
+                flash("Password doesnt match","danger")
                 return redirect(url_for("change"))
             
             password = sha.encrypt(submission["pass"])
@@ -167,7 +215,7 @@ def change():
             session["username"],))
             return redirect(url_for("login"))
         else:
-            flash("Wrong Password")
+            flash("Wrong Password","danger")
             return redirect(url_for("change"))
 
 if __name__ == "__main__":

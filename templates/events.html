@@ -1,54 +1,74 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/card.css">
+{% extends 'index.html' %}
+{% block content %}
 
-  <style type="text/css">
-    .ui.card{
-      height: 280px;
-    }
-  </style>
-</head>
-<body>
-  <div class="ui card" href="" >
-  <div class="content">
-    <div class="header">Project Timeline</div>
-  </div>
-  <div class="content">
-  <div class="meta">
-        <span class="date">dd/mm/yy</span>
-      </div>
 
-    <h3 class="ui sub header">Topics Covered</h3>
-    <div class="ui small feed">
-      <div class="event">
         <div class="content">
-          <div class="summary">
-             <a>Elliot Fu</a> taught......
-          </div>
-        </div>
-      </div>
-      <div class="event">
-        <div class="content">
-          <div class="summary">
-             knapsack problem ...covered by <a>Jenny</a> 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="extra content">
-    <div class="right floated"> 
-      <button class="ui button">edit</button>
-       <button class="ui button">delete</button>
-    </div>
-   </div>
+            <div class="container-fluid">
+                <div class="row">
+                  {% for event in logs %}
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="{{ event[4] }}" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">{{ event[1] }}<br />
+                                     <a href="#"><small>{{ event[3] }}</small></a>
+                                  </h4>
 
-</div>
+                                <p class="description text">
+                                    {{ event[2] }}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                            </div>
+                          </div>
+                      </div>
 
-</body>
-</html>
+                    {% endfor %}
+
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">Title<br>
+                                     <a href="#"><small>date</small></a>
+                                  </h4>
+
+                                <p class="description text">
+                                   content
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                           </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">Title<br>
+                                     <a href="#"><small>date</small></a>
+                                  </h4>
+
+                                <p class="description text">
+                                   content
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                           </div>
+                        </div>
+                    </div>
+
+
+                        </div>
+                    </div>
+                  </div>
+
+{% endblock %}
