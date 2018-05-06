@@ -4,7 +4,6 @@ from flask import Flask, flash, redirect, render_template, request, session, abo
 from passlib.hash import sha256_crypt as sha
 from functools import wraps
 from datetime import datetime
-from time import strptime
 
 
 app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
@@ -126,7 +125,7 @@ def events():
     logs=[]
     current_time = datetime.now()
     for x in events:
-        temp_time = strptime(x[3],'%b %d %Y %I:%M%p')
+        temp_time = datetime.strptime(x[3],'%Y/%m/%d %H:%M')
         if(current_time>temp_time):
             logs.append(x)
         else:
@@ -170,7 +169,7 @@ def addevents():
         submission = {}
         submission["title"] = request.form["title"]
         submission["content"] = request.form["content"]
-        submission["date"] = request.form["date"]
+        submission["date"] = request.form["date"] + " " +request.form["time"]
         submission["images"] = request.form["images"]
 
 
