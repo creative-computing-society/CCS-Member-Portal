@@ -126,10 +126,12 @@ def events():
     current_time = datetime.now()
     for x in events:
         temp_time = datetime.strptime(x[3],'%Y/%m/%d %H:%M')
+        temp_list = list(x)
+        temp_list[3] = (temp_time.strftime('%d, %b %Y at %H:%M'))
         if(current_time>temp_time):
-            logs.append(x)
+            logs.append(temp_list)
         else:
-            upcoming.append(x)
+            upcoming.append(temp_list)
     return render_template('events.html', un=session["username"], upcoming=upcoming, logs=logs)
 
 @app.route('/projects')
