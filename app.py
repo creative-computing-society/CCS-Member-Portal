@@ -2,11 +2,16 @@
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
+from hashlib import md5
 from functools import wraps
 from datetime import datetime
+from flask import send_from_directory
+import uuid
 
-
-app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
+app = Flask(__name__, static_url_path="", static_folder="static")
+UPLOADS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static/uploads')
+app.config['UPLOAD_FOLDER'] = UPLOADS_PATH
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #Limits filesize to 16MB
 
 Database = 'ccslog.db'
 
@@ -90,6 +95,8 @@ def signup():
         submission["phone"] = request.form["ph"]
         submission["pass"] = request.form["password"]
         submission["conf_pass"] = request.form["conf_pass"]
+        digest = md5(submission['username'].encode('utf-8')).hexdigest()
+        submission["image"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 256) #here 256 is size in sq pixels
 
 
         if submission["pass"]!=submission["conf_pass"]:
@@ -101,12 +108,13 @@ def signup():
             return render_template("signup.html")
 
         password = sha.encrypt(submission["pass"])
-        execute_db("insert into users values(?,?,?,?,?,0)", (
+        execute_db("insert into users values(?,?,?,?,?,0,?)", (
             submission["username"],
             submission["name"],
             submission["email"],
             password,
             submission["phone"],
+            submission["image"]
         ))
         flash("User Created","success")
         return redirect(url_for("login"))
@@ -149,10 +157,19 @@ def addproject():
         submission = {}
         submission["title"] = request.form["title"]
         submission["content"] = request.form["content"]
-        submission["images"] = request.form["images"]
-
+        file = request.files['image']
+        if not(file):
+            digest = md5(submission['title'].encode('utf-8')).hexdigest()
+            submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels
+        else:
+            extension = os.path.splitext(file.filename)[1]
+            token = uuid.uuid4().hex+extension
+            f = os.path.join(app.config['UPLOAD_FOLDER'],token)
+            file.save(f)
+            submission["images"] = url_for('uploaded_file',filename=token)
         if query_db("select title from projects where title = ?", (submission["title"],))!=[]:
-            error = "Project Title already exists! Please change the title." 
+            flash("Project Title already exists! Please change the title.")
+            return redirect(url_for("addproject"))
         else:
             execute_db("insert into projects (title, content, images, canapp) values(?,?,?,0)", (
                 submission["title"],
@@ -172,11 +189,19 @@ def addevents():
         submission["title"] = request.form["title"]
         submission["content"] = request.form["content"]
         submission["date"] = request.form["date"] + " " +request.form["time"]
-        submission["images"] = request.form["images"]
-
-
+        file = request.files['image']
+        if not(file):
+            digest = md5(submission['title'].encode('utf-8')).hexdigest()
+            submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels
+        else:
+            extension = os.path.splitext(file.filename)[1]
+            token = uuid.uuid4().hex+extension
+            f = os.path.join(app.config['UPLOAD_FOLDER'],token)
+            file.save(f)
+            submission["images"] = url_for('uploaded_file',filename=token)
         if query_db("select title from events where title = ?", (submission["title"],))!=[]:
-            error = "Events Title already exists! Please change the title." 
+            flash("Events Title already exists! Please change the title.") 
+            return redirect(url_for("addevents"))
         else:
             execute_db("insert into events (title, content, date , images) values(?,?,?,?)", (
                 submission["title"],
@@ -218,6 +243,10 @@ def change():
         else:
             flash("Wrong Password","danger")
             return redirect(url_for("change"))
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
