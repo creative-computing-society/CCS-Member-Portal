@@ -27,7 +27,7 @@
                                 <h4 class="title">Add Events</h4>
                             </div>
                             <div class="content">
-                                <form method="post" action="{{ url_for('addevents') }}">
+                                <form method="post" action="{{ url_for('addevents') }}" enctype=multipart/form-data>
                                     <div class="row">
                                         <div class="col-md-12">
 
@@ -60,7 +60,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Image Url</label>
-                                                <input class="form-control border-input" name="images" placeholder="Image Url" value="" type="text">
+                                                <input class="form-control border-input" name="image" placeholder="Image" value="" type="file">
                                             </div>
                                         </div>
                                     </div>
