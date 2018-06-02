@@ -1,10 +1,17 @@
+#!/usr/bin/env python3
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
+from hashlib import md5
 from functools import wraps
+from datetime import datetime
+from flask import send_from_directory
+import uuid
 
-
-app = Flask(__name__, static_url_path="", static_folder="static") #sets static folder which tells the url_for() in the html files where to look
+app = Flask(__name__, static_url_path="", static_folder="static")
+UPLOADS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static/uploads')
+app.config['UPLOAD_FOLDER'] = UPLOADS_PATH
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #Limits filesize to 16MB
 
 Database = 'ccslog.db'
 
@@ -15,11 +22,6 @@ if app.config["DEBUG"]:
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
         return response
-
-""" app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem" 
-Session(app) """
 
 def login_required(f):
     @wraps(f)
@@ -70,13 +72,15 @@ def login():
         password=request.form["password"]
         phash = query_db("select password from users where username = ?", (username, ))
         if phash==[]:
-            return "Username doesnt exist"
+            flash("User does not exist","danger")
+            return render_template("login.html")
 
         if sha.verify(password, phash[0][0]):
             session["username"] = username
-            return redirect(url_for('profile', username=username))
+            return redirect(url_for('profile'))
         else:
-            return "Password Incorrect"
+            flash("Incorrect Password","danger")
+            return render_template("login.html")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -91,34 +95,126 @@ def signup():
         submission["phone"] = request.form["ph"]
         submission["pass"] = request.form["password"]
         submission["conf_pass"] = request.form["conf_pass"]
+        digest = md5(submission['username'].encode('utf-8')).hexdigest()
+        submission["image"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 256) #here 256 is size in sq pixels
 
 
         if submission["pass"]!=submission["conf_pass"]:
-            return "Wrong password"
+            flash("Passwords don't match","danger")
+            return render_template("signup.html")
 
         if query_db("select username from users where username = ?", (submission["username"],))!=[]:
-            error = "Username already taken" 
+            flash("User already taken","danger")
+            return render_template("signup.html")
 
         password = sha.encrypt(submission["pass"])
-        execute_db("insert into users values(?,?,?,?,?,0)", (
+        execute_db("insert into users values(?,?,?,?,?,0,?)", (
             submission["username"],
             submission["name"],
             submission["email"],
             password,
             submission["phone"],
+            submission["image"]
         ))
-
+        flash("User Created","success")
         return redirect(url_for("login"))
 
-@app.route('/profile/<username>')
+@app.route('/members')
 @login_required
-def profile(username):
+def profile():
     row=query_db('select * from users')
-    return render_template('profile.html', un=username, row=row)
+    return render_template('member.html', un=session["username"], row=row)
+
+@app.route('/events')
+@login_required
+def events():
+    events=query_db('select * from events')
+    upcoming=[]
+    logs=[]
+    current_time = datetime.now()
+    for x in events:
+        temp_time = datetime.strptime(x[3],'%Y/%m/%d %H:%M')
+        temp_list = list(x)
+        temp_list[3] = (temp_time.strftime('%d, %b %Y at %H:%M'))
+        if(current_time>temp_time):
+            logs.append(temp_list)
+        else:
+            upcoming.append(temp_list)
+    return render_template('events.html', un=session["username"], upcoming=upcoming, logs=logs)
+
+@app.route('/projects')
+@login_required
+def projects():
+    row=query_db('select * from projects')
+    return render_template('projects.html', un=session["username"], row=row)
+
+@app.route('/addproject', methods=['GET', 'POST'])
+@login_required
+def addproject():
+    if request.method == "GET":
+        return render_template("addproject.html")
+    else:
+        submission = {}
+        submission["title"] = request.form["title"]
+        submission["content"] = request.form["content"]
+        file = request.files['image']
+        if not(file):
+            digest = md5(submission['title'].encode('utf-8')).hexdigest()
+            submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels
+        else:
+            extension = os.path.splitext(file.filename)[1]
+            token = uuid.uuid4().hex+extension
+            f = os.path.join(app.config['UPLOAD_FOLDER'],token)
+            file.save(f)
+            submission["images"] = url_for('uploaded_file',filename=token)
+        if query_db("select title from projects where title = ?", (submission["title"],))!=[]:
+            flash("Project Title already exists! Please change the title.")
+            return redirect(url_for("addproject"))
+        else:
+            execute_db("insert into projects (title, content, images, canapp) values(?,?,?,0)", (
+                submission["title"],
+                submission["content"],
+                submission["images"],
+            ))
+        return redirect(url_for("projects"))
+
+
+@app.route('/addevents', methods=['GET', 'POST'])
+@login_required
+def addevents():
+    if request.method == "GET":
+        return render_template("addevent.html")
+    else:
+        submission = {}
+        submission["title"] = request.form["title"]
+        submission["content"] = request.form["content"]
+        submission["date"] = request.form["date"] + " " +request.form["time"]
+        file = request.files['image']
+        if not(file):
+            digest = md5(submission['title'].encode('utf-8')).hexdigest()
+            submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels
+        else:
+            extension = os.path.splitext(file.filename)[1]
+            token = uuid.uuid4().hex+extension
+            f = os.path.join(app.config['UPLOAD_FOLDER'],token)
+            file.save(f)
+            submission["images"] = url_for('uploaded_file',filename=token)
+        if query_db("select title from events where title = ?", (submission["title"],))!=[]:
+            flash("Events Title already exists! Please change the title.") 
+            return redirect(url_for("addevents"))
+        else:
+            execute_db("insert into events (title, content, date , images) values(?,?,?,?)", (
+                submission["title"],
+                submission["content"],
+                submission["date"],
+                submission["images"],
+            ))
+        return redirect(url_for("events"))
 
 @app.route("/logout")
 def logout():
     session.clear()
+    flash("Logout success","success")
     return redirect(url_for("login"))
 
 @app.route("/change", methods=["GET", "POST"])
@@ -135,7 +231,7 @@ def change():
             submission["conf_pass"] = request.form["conf_pass"]
             
             if submission["pass"]!=submission["conf_pass"]:
-                flash("Password doesnt match")
+                flash("Password doesnt match","danger")
                 return redirect(url_for("change"))
             
             password = sha.encrypt(submission["pass"])
@@ -145,8 +241,12 @@ def change():
             session["username"],))
             return redirect(url_for("login"))
         else:
-            flash("Wrong Password")
+            flash("Wrong Password","danger")
             return redirect(url_for("change"))
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
