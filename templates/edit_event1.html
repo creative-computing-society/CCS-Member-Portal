@@ -24,16 +24,18 @@
             </script> 
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Add Events</h4>
+                                <h4 class="title">Edit Event </h4>
                             </div>
                             <div class="content">
-                                <form method="post" action="{{ url_for('addevents') }}" enctype="multipart/form-data">
+                               
+                             
+                                <form method="post" action="{{ url_for('edit_event',event_id=id ) }}" enctype=multipart/form-data>
                                     <div class="row">
                                         <div class="col-md-12">
 
                                             <div class="form-group">
                                                 <label>Title</label>
-                                                <input class="form-control border-input" name="title" placeholder="Title Of Event" value="" type="text">
+                                                <input class="form-control border-input" name="title" placeholder="Title Of Event"  type="text" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -78,6 +80,7 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </form>
+                        
                             </div>
                         </div>
                     </div>
