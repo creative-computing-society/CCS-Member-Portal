@@ -1,22 +1,64 @@
 {% extends 'index.html' %}
-
 {% block content %}
-    {% for projects in row %}
-        
 
-<div class="card" style="width: 18rem;">
-<img class="card-img-top" src="{{ projects[3] }}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{ projects[1] }}</h5>  <!--  Card Title -->
-    <p class="card-text">{{ projects[2] }}</p>    <!--  Content -->
-    <a href="{{ projects[4] }}" class="card-link">Apply</a>
-    <a href="#" class="card-link">Edit</a>
-    <a href="#" class="card-link">Delete</a>
-  </div>
-</div>
+      <div class="row">
+      <a href="{{ url_for('addproject') }}" class="btn btn-primary pull-right" role="button"><i class="ti-pencil-alt"></i>Add Projects</a>
+      </div>
 
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                  {% for projects in row %}
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="{{ projects[3] }}" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">{{ projects[1] }}<br />
+                                  </h4>
 
-    {% endfor %}
+                                <p class="description text">
+                                    {{ projects[2] }}
 
+                                </p>
+
+                                <a class="btn btn-info btn-sm" href="{{ url_for('apply',title=projects[1])}}"><i class="ti-stamp"></i>Apply</a>
+                              
+                                  <a class="btn btn-info btn-sm" href="{{ url_for('edit_project',project_id=projects[0]) }}"><i class="ti-pencil"></i>Edit</a>
+                                  <a class="btn btn-danger btn-sm" href="{{ url_for('delete_project',project_id=projects[0]) }}"><i class="ti-close"></i>Delete</a>
+                              
+                            </div>
+                          </div>
+                      </div>
+
+                    {% endfor %}
+
+             <!--       <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">Title<br>
+                                     <a href="#"><small>date</small></a>
+                                  </h4>
+
+                                <p class="description text">
+                                   content
+                                </p>
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-stamp"></i>Apply</button>
+                                {% if admin==0 %}
+                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
+                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                                {% endif %}
+                           </div>
+                        </div>
+                    </div>
+                -->  
+
+                        </div>
+                    </div>
+                  </div>
 
 {% endblock %}

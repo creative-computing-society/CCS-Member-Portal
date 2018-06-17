@@ -1,0 +1,55 @@
+ {% extends 'index.html' %}
+ {% block content %}
+
+
+<div class="col-lg-8 col-md-7">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Edit Event</h4>
+                            </div>
+                            <div class="content">
+                                <form method="post" action="{{ url_for('edit_event',event_id=id ) }}" enctype=multipart/form-data>
+
+                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input class="form-control border-input" name="image" placeholder="Image" value="{{ event[0][4] }}" type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="form-group">
+                                                <input class="form-control border-input" name="title" placeholder="Title Of Event" value="{{ event[0][1] }}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input class="form-control border-input" name="date" placeholder="Date" value="{{ event[0][3] }}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea rows="5" class="form-control border-input" name="content" placeholder="Event Content" >{{ event[0][2] }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}

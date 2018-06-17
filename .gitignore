@@ -9,3 +9,5 @@ share
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+
+\.vscode/

@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% block content %}
+      <div class="row">
+      <a href="{{ url_for('addevents') }}" class="btn btn-primary pull-right" role="button"><i class="ti-pencil-alt"></i>Add Events</a>
+    </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+
+                        {% for event in upcoming %}
+                        <div class="col-lg-4 col-md-5">
+                            <div class="card card-user">
+                                <div class="image">
+                                    <img src="{{ event[4] }}" alt=""/>
+                                </div>
+                                <div class="content">
+                                      <h4 class="title">{{ event[1] }}<br />
+                                         <a href="#"><small>{{ event[3] }}</small></a>
+                                      </h4>
+    
+                                    <p class="description text">
+                                        {{ event[2] }}
+    
+                                    </p>
+                                    
+                                     {% if admin==0 %}   
+                                    <a class="btn btn-info btn-sm" href="{{ url_for('edit_event',event_id=event[0]) }}"><i class="ti-pencil"></i>Edit</a>
+                                    <a class="btn btn-danger btn-sm" href="{{ url_for('delete_event',event_id=event[0]) }}"><i class="ti-close"></i>Delete</a>
+                                     {% endif %}
+
+                                    
+                                </div>
+                              </div>
+                          </div>
+    
+                        {% endfor %}
+
+                  {% for event in logs %}
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="{{ event[4] }}" alt=""/>
+                            </div>
+                            <div class="content">
+                                  <h4 class="title">{{ event[1] }}<br />
+                                     <a href="#"><small>{{ event[3] }}</small></a>
+                                  </h4>
+
+                                <p class="description text">
+                                    {{ event[2] }}
+
+                                </p>
+                                {% if admin==0 %}
+                                <a class="btn btn-info btn-sm" href="{{ url_for('edit_event',event_id=event[0])}}"><i class="ti-pencil"></i>Edit</a>
+                                <a class="btn btn-danger btn-sm"   href="{{ url_for('delete_event',event_id=event[0]) }}"><i class="ti-close"></i>Delete</a>
+                                {% endif %}
+                            </div>
+                          </div>
+                      </div>
+
+                    {% endfor %}
+                        </div>
+                    </div>
+                  </div>
+
+{% endblock %}
