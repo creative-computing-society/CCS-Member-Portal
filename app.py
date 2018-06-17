@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!E:/GitHub/ccs-log/env/Scripts/python
 import sqlite3 ,os
 from flask import Flask, flash, redirect, render_template, request, session, abort , g , url_for , jsonify
 from passlib.hash import sha256_crypt as sha
@@ -175,8 +175,8 @@ def addproject():
         submission = {}
         submission["title"] = request.form["title"]
         submission["content"] = request.form["content"]
-        file = request.files['image']
-        if not(file):
+        file = request.files.get('image')
+        if file is None:
             digest = md5(submission['title'].encode('utf-8')).hexdigest()
             submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels
         else:
@@ -207,7 +207,7 @@ def addevents():
         submission["title"] = request.form["title"]
         submission["content"] = request.form["content"]
         submission["date"] = request.form["date"] + " " +request.form["time"]
-        file = request.files["image"]
+        file = request.files.get('image')
         if not(file):
             digest = md5(submission['title'].encode('utf-8')).hexdigest()
             submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 256) #here 256 is size in sq pixels
@@ -280,7 +280,7 @@ def edit_event(event_id):
         submission["title"]=request.form["title"]
         submission["date"] = request.form["date"] + " " +request.form["time"]
         submission["content"]=request.form["content"]
-        file = request.files['image']
+        file = request.files.get('image')
         if not(file):
             digest = md5(submission["title"].encode('utf-8')).hexdigest()
             submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels
@@ -318,7 +318,7 @@ def edit_project(project_id):
         submission={}
         submission["title"]=request.form["title"]
         submission["content"]=request.form["content"]
-        file = request.files['image']
+        file = request.files.get('image')
         if not(file):
             digest = md5(submission["title"].encode('utf-8')).hexdigest()
             submission["images"] = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 128) #here 128 is size in sq pixels

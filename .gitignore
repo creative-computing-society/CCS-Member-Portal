@@ -11,3 +11,5 @@ pyvenv.cfg
 pip-selfcheck.json
 
 \.vscode/
+env
+win.txt
