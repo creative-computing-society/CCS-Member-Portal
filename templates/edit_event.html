@@ -5,15 +5,15 @@
 <div class="col-lg-8 col-md-7">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Edit Events</h4>
+                                <h4 class="title">Edit Event</h4>
                             </div>
                             <div class="content">
-                                <form method="post" action="{{ url_for('edit_event') }}">
+                                <form method="post" action="{{ url_for('edit_event',event_id=id ) }}" enctype=multipart/form-data>
 
                                      <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input class="form-control border-input" name="images" placeholder="Image" value="{{ event[4] }}" type="text">
+                                                <input class="form-control border-input" name="image" placeholder="Image" value="{{ event[0][4] }}" type="file">
                                             </div>
                                         </div>
                                     </div>
@@ -23,7 +23,7 @@
                                         <div class="col-md-12">
 
                                             <div class="form-group">
-                                                <input class="form-control border-input" name="title" placeholder="Title Of Event" value="{{ event[1] }}" type="text">
+                                                <input class="form-control border-input" name="title" placeholder="Title Of Event" value="{{ event[0][1] }}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -31,7 +31,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <input class="form-control border-input" name="date" placeholder="Date" value="{{ event[3] }}" type="text">
+                                                <input class="form-control border-input" name="date" placeholder="Date" value="{{ event[0][3] }}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -40,7 +40,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <textarea rows="5" class="form-control border-input" name="content" placeholder="Event Content" >{{ event[2] }}</textarea>
+                                                <textarea rows="5" class="form-control border-input" name="content" placeholder="Event Content" >{{ event[0][2] }}</textarea>
                                             </div>
                                         </div>
                                     </div>

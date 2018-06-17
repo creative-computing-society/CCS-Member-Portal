@@ -23,8 +23,13 @@
                                         {{ event[2] }}
     
                                     </p>
-                                    <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
-                                    <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                                    
+                                     {% if admin==0 %}   
+                                    <a class="btn btn-info btn-sm" href="{{ url_for('edit_event',event_id=event[0]) }}"><i class="ti-pencil"></i>Edit</a>
+                                    <a class="btn btn-danger btn-sm" href="{{ url_for('delete_event',event_id=event[0]) }}"><i class="ti-close"></i>Delete</a>
+                                     {% endif %}
+
+                                    
                                 </div>
                               </div>
                           </div>
@@ -46,8 +51,10 @@
                                     {{ event[2] }}
 
                                 </p>
-                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
-                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                                {% if admin==0 %}
+                                <a class="btn btn-info btn-sm" href="{{ url_for('edit_event',event_id=event[0])}}"><i class="ti-pencil"></i>Edit</a>
+                                <a class="btn btn-danger btn-sm"   href="{{ url_for('delete_event',event_id=event[0]) }}"><i class="ti-close"></i>Delete</a>
+                                {% endif %}
                             </div>
                           </div>
                       </div>

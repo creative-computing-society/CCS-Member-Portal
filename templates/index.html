@@ -99,7 +99,7 @@
 								<p>Settings</p>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Profile</a></li>
+                                <li><a href="{{ url_for('edit_profile')}}">Profile</a></li>
                                 <li><a href="{{ url_for('logout')}}">Sign Out</a></li>
                               </ul>
                         </li>
@@ -117,6 +117,31 @@
             </div>
         </div>
 
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      var messages = {{ messages | safe }}; 
+      for (var i=0; i<messages.length; i++) {
+        alert(messages[i]);
+      }
+    </script>
+  {% endif %}
+{% endwith %}
+
+
+<!--  {% with messages = get_flashed_messages(with_categories=true) %}
+   
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %} -->
 
         <!-- <footer class="footer">
             <div class="container-fluid">
@@ -181,7 +206,7 @@
 	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
     <script src="/js/demo.js"></script>
 
-    <script type="text/javascript">
+  <!--  <script type="text/javascript">
         {% with messages = get_flashed_messages(with_categories=true) %}
 			{% if messages %}
 				function flashMessages() {
@@ -203,6 +228,6 @@
             {% endif %}
         {% endwith %}
     </script>
-
+-->
 
 </html>
