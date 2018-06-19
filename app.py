@@ -135,12 +135,18 @@ def signup():
 @app.route('/members')
 @login_required
 def profile():
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
     row=query_db('select * from users')
-    return render_template('member.html', un=session["username"], row=row)
+    return render_template('member.html', un=session["username"], row=row,pcount=pcount,ecount=ecount,admin=admin)
 
 @app.route('/events')
 @login_required
 def events():
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
     a=query_db("select admin from users where username =?",(session["username"],))
     admin=a[0][0]
     events=query_db('select * from events')
@@ -155,22 +161,28 @@ def events():
             logs.append(temp_list)
         else:
             upcoming.append(temp_list)
-    return render_template('events.html', un=session["username"], upcoming=upcoming, logs=logs ,admin=admin)
-
-
+    return render_template('events.html', un=session["username"], upcoming=upcoming, logs=logs ,admin=admin,pcount=pcount,ecount=ecount)
 
 
 @app.route('/projects')
 @login_required
 def projects():
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
     row=query_db('select * from projects')
-    return render_template('projects.html', un=session["username"], row=row)
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
+    return render_template('projects.html', un=session["username"], row=row,admin=admin,pcount=pcount,ecount=ecount)
 
 @app.route('/addproject', methods=['GET', 'POST'])
 @login_required
 def addproject():
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
     if request.method == "GET":
-        return render_template("addproject.html")
+        return render_template("addproject.html",pcount=pcount,ecount=ecount)
     else:
         submission = {}
         submission["title"] = request.form["title"]
@@ -189,10 +201,15 @@ def addproject():
             flash("Project Title already exists! Please change the title.")
             return redirect(url_for("addproject"))
         else:
-            execute_db("insert into projects (title, content, images, canapp) values(?,?,?,0)", (
+            if admin==0:
+                accept=0
+            else:
+                accept=1 
+            execute_db("insert into projects (title, content, images, canapp,accept) values(?,?,?,0,?)", (
                 submission["title"],
                 submission["content"],
                 submission["images"],
+                accept,
             ))
         return redirect(url_for("projects"))
 
@@ -200,8 +217,12 @@ def addproject():
 @app.route('/addevents', methods=['GET', 'POST'])
 @login_required
 def addevents():
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
     if request.method == "GET":
-        return render_template("addevent.html")
+        return render_template("addevent.html",pcount=pcount,ecount=ecount,admin=admin)
     else:
         submission = {}
         submission["title"] = request.form["title"]
@@ -221,11 +242,16 @@ def addevents():
             flash("Events Title already exists! Please change the title.") 
             return redirect(url_for("addevents"))
         else:
-            execute_db("insert into events (title, content, date , images) values(?,?,?,?)", (
+            if admin==0:
+                accept=0
+            else:
+                accept=1
+            execute_db("insert into events (title, content, date , images) values(?,?,?,?,?)", (
                 submission["title"],
                 submission["content"],
                 submission["date"],
                 submission["images"],
+                accept,
             ))
         return redirect(url_for("events"))
 
@@ -270,9 +296,13 @@ def delete_event(event_id):
 @app.route('/edit_event/<event_id>' , methods=['GET', 'POST'])
 @login_required
 def edit_event(event_id):
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
     if request.method == "GET":
         event=query_db("select * from events where id=?",(event_id,))
-        return render_template("edit_event1.html",id=event_id ,event=event)
+        return render_template("edit_event1.html",id=event_id ,event=event,pcount=pcount,ecount=ecount,admin=admin)
 
     else:
 
@@ -309,9 +339,13 @@ def delete_project(project_id):
 @app.route('/edit_project/<project_id>' , methods=['GET', 'POST'])
 @login_required
 def edit_project(project_id):
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
     if request.method == "GET":
         project=query_db("select * from projects where id=?",(project_id,))
-        return render_template("edit_project1.html",id=project_id ,project=project)
+        return render_template("edit_project1.html",id=project_id ,project=project,pcount=pcount,ecount=ecount,admin=admin)
 
     else:
 
@@ -348,15 +382,23 @@ def apply(title):
 
     mail.send(msg)
     flash("mail has been sent to admin for confirmation")
+    notice_by=session["username"]
+    notice_for="admin"
+    execute_db("insert into notifications (for,by,project) values (?,?,?) ",(notice_for,notice_by,title,))
+
     return redirect(url_for("projects"))
 
 
 @app.route('/edit_profile' , methods=['GET','POST'])
 @login_required 
 def edit_profile():
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
     data=query_db("select * from users where username=?",(session['username'],))
     if request.method=='GET':
-        return render_template("edit_profile.html",data=data)   
+        return render_template("edit_profile.html",data=data,pcount=pcount,ecount=ecount,admin=admin)   
     else:
         submission={}
         submission["name"]=request.form["name"]
@@ -370,7 +412,51 @@ def edit_profile():
             execute_db("update users set name=? , phoneno=? ,username=?, email=? where username=?",(submission["name"],submission["phone"],submission["username"],submission["email"],session["username"],))
             data1=query_db("select * from users where username=?",(session['username'],))
             flash("Profile updated !")
-            return render_template("edit_profile.html",data=data1)
+            return render_template("edit_profile.html",data=data1,pcount=pcount,ecount=ecount,admin=admin)
+
+@app.route('/accept_project/<project_id>')
+@login_required
+def accept_project(project_id):
+    execute_db("update projects set accept=? where id=?",(1,project_id,))
+    return redirect(url_for("projects"))   
+
+@app.route('/accept_event/<event_id>')
+@login_required
+def accept_event(event_id):
+    execute_db("update events set accept=? where id=?",(1,event_id,))
+    return redirect(url_for("events"))           
+
+@app.route('/notifications')
+@login_required
+def notifications():
+    ecount=query_db("select count(id) from events where accept=? ",(0,))
+    pcount=query_db("select count(id) from projects where accept=? ",(0,))
+    a=query_db("select admin from users where username =?",(session["username"],))
+    admin=a[0][0]
+    row=query_db("select * from notifications where for=?",(session["username"],))
+    row1=query_db("select * from notifications where for=?",("admin",))    
+
+    return render_template("notifications.html",admin=admin,row=row,row1=row1,pcount=pcount,ecount=ecount)    
+
+@app.route('/accept_apply/<id>')
+@login_required
+def accept_apply(id):
+    r=query_db("select * from notifications where id=?",(id,))
+    notice_for=r[0][1]
+    title=r[0][2]
+    notice_by="admin"
+    execute_db("insert into notifications (for,by,project) values (?,?,?) ",(notice_for,notice_by,title,))
+    execute_db("delete from notifications where id=?",(id,))
+    return redirect(url_for("notifications"))
+     
+         
+
+@app.route('/delete_notice/<notice_id>')
+@login_required
+def delete_notice(notice_id):
+    execute_db('delete from notifications where id=?',(notice_id,))
+    return redirect(url_for("notifications"))             
+
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

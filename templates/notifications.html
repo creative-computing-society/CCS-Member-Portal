@@ -1,0 +1,51 @@
+ {% extends 'index.html'  %}
+ {% block content %}
+
+  <div class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Notifications</h4>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-6">
+                               
+                             {% if admin==1 %}<!-- for admin-->
+                               {% for message in row1 %}
+                               
+                                <div class="alert alert-info alert-with-icon" data-notify="container">
+                                    <a type="button" aria-hidden="true" class="close" href="{{url_for('delete_notice',notice_id=message[3])}}">×</a>
+                                    <span data-notify="icon" class="ti-bell"></span>
+                                    <span data-notify="message">{{message[1]}} wants to apply for project titled {{message[2]}}. </span>
+                                    <a  class="btn btn-danger btn-sm" href="{{url_for('accept_apply',id=message[3])}}">accept </a>
+                                </div>
+
+                                {% endfor %}
+
+                               {% else %}
+                                  {% for message in row %}<!-- for users-->
+                               
+                                <div class="alert alert-info alert-with-icon" data-notify="container">
+                                    <a type="button" aria-hidden="true" class="close" href="{{url_for('delete_notice',notice_id=message[3])}}">×</a>
+                                    <span data-notify="icon" class="ti-bell"></span>
+                                    <span data-notify="message">Your request to apply for project titled {{message[2]}} has been accepted. </span>
+                                </div>
+
+                                {% endfor %}
+
+                                {% endif %}
+
+                            </div>
+                          
+                        </div>
+                        <br>
+                        <br>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}        
