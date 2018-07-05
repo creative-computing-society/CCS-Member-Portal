@@ -47,22 +47,37 @@
             </div>
 
         		<ul class="nav">
-                <li {% if request.path == url_for('events') %}class="active"{% endif %}>
-                    <a href="{{ url_for('events')}}">
-						<i class="ti-calendar"></i>
-                        <p>Events</p>
-                    </a>
-                </li>
                 <li {% if request.path == url_for('profile') %}class="active"{% endif %}>
                     <a href="{{ url_for('profile') }}">
                         <i class="ti-user"></i>
                         <p>Members</p>
                     </a>
                 </li>
+                <li {% if request.path == url_for('events') %}class="active"{% endif %}>
+                    <a href="{{ url_for('events')}}">
+                        <i class="ti-calendar"></i>
+                        {% if admin==0 %}<!-- need to make it admin==1-->
+                        <p>Events<span class="badge">{{ecount[0][0]}}</p>
+                        {% else %}
+                        <p>Event</p>
+                        {% endif %}
+                    </a>
+                </li>
+                
                 <li {% if request.path == url_for('projects') %}class="active"{% endif %}>
                     <a href="{{ url_for('projects') }}">
                         <i class="ti-pencil-alt"></i>
+                        {% if admin==0%} <!-- need to make it admin==1 -->
+                        <p>Projects <span class="badge">{{pcount[0][0]}}</span></p>
+                        {% else %}
                         <p>Projects</p>
+                        {% endif %}
+                    </a>
+                </li>
+                 <li {% if request.path == url_for('notifications') %}class="active"{% endif %}>
+                    <a href="{{ url_for('notifications') }}">
+                        <i class="ti-bell"></i>
+                        <p>Notifications</p>
                     </a>
                 </li>
             </ul>
