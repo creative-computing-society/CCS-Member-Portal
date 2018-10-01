@@ -9,29 +9,62 @@
             <div class="container-fluid">
                 <div class="row">
                   {% for projects in row %}
-                    <div class="col-lg-4 col-md-5">
-                        <div class="card card-user">
-                            <div class="image">
-                                <img src="{{ projects[3] }}" alt=""/>
-                            </div>
-                            <div class="content">
-                                  <h4 class="title">{{ projects[1] }}<br />
-                                  </h4>
+                  {% if admin==0 %} <!-- if not admin-->
+                    {% if projects[5]==1 %}
+                      <div class="col-lg-4 col-md-5">
+                          <div class="card card-user">
+                              <div class="image">
+                                  <img src="{{ projects[3] }}" alt=""/>
+                              </div>
+                              <div class="content">
+                                    <h4 class="title">{{ projects[1] }}<br />
+                                    </h4>
 
-                                <p class="description text">
-                                    {{ projects[2] }}
+                                  <p class="description text">
+                                      {{ projects[2] }}
 
-                                </p>
-                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-stamp"></i>Apply</button>
-                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
-                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                                  </p>
+
+                                  <a class="btn btn-info btn-sm" href="{{ url_for('apply',title=projects[1])}}"><i class="ti-stamp"></i>Apply</a>
+                                
+                                    <a class="btn btn-info btn-sm" href="{{ url_for('edit_project',project_id=projects[0]) }}"><i class="ti-pencil"></i>Edit</a>
+                                    <a class="btn btn-danger btn-sm" href="{{ url_for('delete_project',project_id=projects[0]) }}"><i class="ti-close"></i>Delete</a>
+                                
+                              </div>
                             </div>
-                          </div>
-                      </div>
+                        </div>
+                        {% endif %} 
+                   {% else %}
+                        <div class="col-lg-4 col-md-5">
+                          <div class="card card-user">
+                              <div class="image">
+                                  <img src="{{ projects[3] }}" alt=""/>
+                              </div>
+                              <div class="content">
+                                    <h4 class="title">{{ projects[1] }}<br />
+                                    </h4>
+
+                                  <p class="description text">
+                                      {{ projects[2] }}
+
+                                  </p>
+                                  {% if projects[5]==0 %}
+                                  <a class="btn btn-success btn-sm" href="{{ url_for('accept_project',project_id=projects[0])}}"><i class="ti-save"></i>Save </a>
+                                  {% endif %}
+                                
+                                    <a class="btn btn-info btn-sm" href="{{ url_for('edit_project',project_id=projects[0]) }}"><i class="ti-pencil"></i>Edit</a>
+                                    <a class="btn btn-danger btn-sm" href="{{ url_for('delete_project',project_id=projects[0]) }}"><i class="ti-close"></i>Delete</a>
+                                
+                              </div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+
 
                     {% endfor %}
 
-                    <div class="col-lg-4 col-md-5">
+             <!--       <div class="col-lg-4 col-md-5">
                         <div class="card card-user">
                             <div class="image">
                                 <img src="" alt=""/>
@@ -45,32 +78,14 @@
                                    content
                                 </p>
                                 <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-stamp"></i>Apply</button>
+                                {% if admin==0 %}
                                 <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
                                 <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
+                                {% endif %}
                            </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-4 col-md-5">
-                        <div class="card card-user">
-                            <div class="image">
-                                <img src="" alt=""/>
-                            </div>
-                            <div class="content">
-                                  <h4 class="title">Title<br>
-                                     <a href="#"><small>date</small></a>
-                                  </h4>
-
-                                <p class="description text">
-                                   content
-                                </p>
-                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-stamp"></i>Apply</button>
-                                <button class="btn btn-info btn-sm" onclick="window.location.href='#edit'"><i class="ti-pencil"></i>Edit</button>
-                                <button class="btn btn-danger btn-sm"  onclick="window.location.href='#delete'"><i class="ti-close"></i>Delete</button>
-                           </div>
-                        </div>
-                    </div>
-
+                -->  
 
                         </div>
                     </div>
