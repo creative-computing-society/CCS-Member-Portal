@@ -1,1 +1,1 @@
-# This portal will be used to keep track of members of the Creative Computing Society.
+# This portal will be used to keep record of various meetups.
