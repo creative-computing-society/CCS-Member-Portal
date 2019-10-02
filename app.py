@@ -26,7 +26,7 @@ mail=Mail(app)
 app.secret_key = os.urandom(12)
 
 Database = 'ccslog.db'
-
+#for hacktoberfest
 if app.config["DEBUG"]:
     @app.after_request
     def after_request(response):
