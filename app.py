@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOADS_PATH
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #Limits filesize to 16MB
 
 Database = 'ccslog.db'
-
+#for hacktoberfest
 if app.config["DEBUG"]:
     @app.after_request
     def after_request(response):
